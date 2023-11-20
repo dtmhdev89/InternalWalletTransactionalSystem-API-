@@ -42,6 +42,4 @@ COPY --from=basebuilder --chown=rails:rails /usr/local/bundle /usr/local/bundle
 COPY --chown=rails:rails . .
 USER rails:rails
 
-RUN bundle exec rake assets:precompile
-
 CMD ["bundle", "exec", "puma", "config/puma.rb"]

@@ -8,36 +8,12 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data:cached
 
-  # app: &app_base
-  #   environment:
-  #     - DB_HOST=db
-  #     - DB_USER_NAME=postgres
-  #     - DB_PASSWORD=
-  #   build: .
-  #   depends_on:
-  #     - db
-  #   entrypoint: wait-for-it db:5432 -t 30 -s --
-  builder:
-    tty: true
-    stdin_open: true
+  app: &app_base
     environment:
       - DB_HOST=db
       - DB_USER_NAME=postgres
       - DB_PASSWORD=
-    volumes:
-      - .:/app:delegated
-      - /app/tmp
-      - bundle-data:/usr/local/bundle
-    build:
-      context: .
-      target: basebuilder
+    build: .
     depends_on:
       - db
     entrypoint: wait-for-it db:5432 -t 30 -s --
-    command: ''
-    ports: []
-volumes:
-  db-data:
-    driver: local
-  bundle-data:
-    driver: local
