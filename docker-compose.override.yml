@@ -5,22 +5,30 @@ services:
     image: postgres:14
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 11032:5432
     volumes:
       - db-data:/var/lib/postgresql/data:cached
 
   app: &app_base
     tty: true
     stdin_open: true
+    environment:
+      - ALLOWED_HOST=["localhost:3000"]
     command: ./scripting_files/web_app_start.sh
     volumes:
       - .:/app:delegated
       - /app/tmp
       - bundle-data:/usr/local/bundle
     ports:
-      - 3000:3000
+      - 3010:3000
 
   builder:
     <<: *app_base
+    environment:
+      - DB_HOST=db
+      - DB_USER_NAME=postgres
+      - DB_PASSWORD=
     build:
       context: .
       target: basebuilder

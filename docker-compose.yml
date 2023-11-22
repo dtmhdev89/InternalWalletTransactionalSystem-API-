@@ -5,8 +5,6 @@ services:
     image: postgres:14
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
-    volumes:
-      - db-data:/var/lib/postgresql/data:cached
 
   app: &app_base
     environment:
