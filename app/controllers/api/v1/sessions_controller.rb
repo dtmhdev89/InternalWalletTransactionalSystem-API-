@@ -6,7 +6,7 @@ class Api::V1::SessionsController < ApplicationController
       login(user)
       render json: {user_id: user.id}, status: :ok
     else
-      render status: :unauthorized
+      raise ApiErrors::Unauthorized
     end
   end
 
