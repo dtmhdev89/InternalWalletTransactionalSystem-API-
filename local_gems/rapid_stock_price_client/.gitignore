@@ -1,0 +1,8 @@
+.byebug_history
+/.bundle/
+/Gemfile.lock
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/

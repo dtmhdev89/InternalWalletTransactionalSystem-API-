@@ -15,6 +15,7 @@ services:
     stdin_open: true
     environment:
       - ALLOWED_HOST=["localhost:3000"]
+      - RAPID_API_KEY=ebfec3a983msh54fe942127aa33ap132dc1jsn98a8f031e8a5
     command: ./scripting_files/web_app_start.sh
     volumes:
       - .:/app:delegated

@@ -57,5 +57,10 @@ group :development do
   gem "solargraph", require: false
 end
 
+#local_gems
+path "local_gems" do
+  gem "rapid_stock_price_client"
+end
+
 # App gems in alphabetically ordered
 gem "httparty"
