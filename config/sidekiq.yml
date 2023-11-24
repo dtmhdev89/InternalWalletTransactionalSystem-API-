@@ -1,0 +1,10 @@
+:concurrency: <%= ENV["SIDEKIQ_MAX_THREADS"] || 1 %>
+:pidfile: <%= ENV["SIDEKIQ_PID"] || "./tmp/pids/sidekiq.pid" %>
+<% unless ENV["SIDEKIQ_STDOUT"] %>
+:logfile: ./log/sidekiq.log
+<% end %>
+:timeout: 60
+:queues:
+  - default
+  - ["high", 5]
+  - ["low", 1]

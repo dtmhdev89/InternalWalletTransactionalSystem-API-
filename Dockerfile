@@ -13,6 +13,8 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && apt-get update &&
 ENV BUNDLER_VERSION="2.4.6"
 
 COPY "Gemfile*" /app/
+RUN mkdir -p /app/local_gems
+COPY local_gems /app/local_gems
 RUN gem install bundler -v "$BUNDLER_VERSION" && \
   bundle config --global github.https true && \
   bundle install -j "$(nproc)" --retry 5

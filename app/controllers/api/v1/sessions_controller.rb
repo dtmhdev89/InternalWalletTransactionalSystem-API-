@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
-  before_action :authenticate_user!, only: :destroy
+  skip_before_action :authenticate_user!, only: :create
 
   def create
     if user

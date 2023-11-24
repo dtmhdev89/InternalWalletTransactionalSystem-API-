@@ -7,6 +7,9 @@ class Account < ApplicationRecord
   validates :type, presence: true
 
   has_many :active_sessions, dependent: :destroy
+  has_many :wallets
+  has_many :wallet_transactions, through: :wallets
+  has_one :active_wallet, -> { where(enabled: true) }, class_name: "Wallet"
 
   class << self
     def authenticate_by(attributes)

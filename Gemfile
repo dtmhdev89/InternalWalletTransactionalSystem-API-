@@ -64,3 +64,5 @@ end
 
 # App gems in alphabetically ordered
 gem "httparty"
+gem "sidekiq", "~>7.2"
+gem "sidekiq-status", "~>3.0"

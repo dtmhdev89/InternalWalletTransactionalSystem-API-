@@ -15,14 +15,48 @@ services:
     stdin_open: true
     environment:
       - ALLOWED_HOST=["localhost:3000"]
-      - RAPID_API_KEY=ebfec3a983msh54fe942127aa33ap132dc1jsn98a8f031e8a5
+      - RAPID_API_KEY=
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - SIDEKIQ_MAX_THREADS=5
+      - SIDEKIQ_STDOUT="true"
+      - SIDEKIQ_PID=/tmp/sidekiq.pid
     command: ./scripting_files/web_app_start.sh
+    depends_on:
+      - db
+      - redis
     volumes:
       - .:/app:delegated
       - /app/tmp
       - bundle-data:/usr/local/bundle
     ports:
       - 3010:3000
+
+  worker:
+    <<: *app_base
+    build: .
+    environment:
+      - DB_HOST=db
+      - DB_USER_NAME=postgres
+      - DB_PASSWORD=
+      - ALLOWED_HOST=["localhost:3000"]
+      - RAPID_API_KEY=
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - SIDEKIQ_MAX_THREADS=5
+      - SIDEKIQ_STDOUT="true"
+      - SIDEKIQ_PID=/tmp/sidekiq.pid
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    entrypoint: wait-for-it db:5432 -t 30 -s --
+    ports: []
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app:delegated
+      - bundle-data:/usr/local/bundle
 
   builder:
     <<: *app_base

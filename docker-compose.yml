@@ -15,3 +15,6 @@ services:
     depends_on:
       - db
     entrypoint: wait-for-it db:5432 -t 30 -s --
+
+  redis:
+    image: redis:7.2-alpine
